@@ -1,0 +1,103 @@
+{
+  "name": "BloodBridge - Thalassemia Blood Management",
+  "short_name": "BloodBridge",
+  "description": "AI-powered blood donation management platform for Thalassemia patients in India",
+  "start_url": "/index-modern.html",
+  "display": "standalone",
+  "background_color": "#0F1419",
+  "theme_color": "#1FB8CD",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshots/dashboard.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/assets/screenshots/mobile-home.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["health", "medical", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Emergency Request",
+      "short_name": "Emergency",
+      "description": "Quick blood emergency request",
+      "url": "/index-modern.html?action=emergency",
+      "icons": [{ "src": "/assets/icons/emergency.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Find Donors",
+      "short_name": "Donors",
+      "description": "Search for blood donors",
+      "url": "/index-modern.html?section=donors",
+      "icons": [{ "src": "/assets/icons/donors.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Chatbot",
+      "short_name": "Veeru AI",
+      "description": "Chat with Veeru AI assistant",
+      "url": "/index-modern.html?chatbot=open",
+      "icons": [{ "src": "/assets/icons/chatbot.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr"
+}

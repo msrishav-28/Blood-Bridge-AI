@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Blood Donation Management for Thalassemia Care - Ultra Modern Platform">
+    <meta name="theme-color" content="#1FB8CD">
+    <title>Thalassemia Blood Bridge - Next Gen Healthcare Platform</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Modern CSS Framework & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/modern-styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Chart.js & Advanced Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4/dist/socket.io.min.js"></script>
+</head>
+<body class="light-theme">
+    <!-- Floating Action Button Menu -->
+    <div class="fab-container">
+        <button class="fab-main" id="fabMain">
+            <i class="fas fa-plus"></i>
+        </button>
+        <div class="fab-menu hidden">
+            <button class="fab-item" data-action="emergency" title="Emergency Request">
+                <i class="fas fa-ambulance"></i>
+            </button>
+            <button class="fab-item" data-action="donate" title="Register as Donor">
+                <i class="fas fa-hand-holding-heart"></i>
+            </button>
+            <button class="fab-item" data-action="video-call" title="Video Consultation">
+                <i class="fas fa-video"></i>
+            </button>
+            <button class="fab-item" data-action="health-records" title="Health Records">
+                <i class="fas fa-file-medical"></i>
+            </button>
+            <button class="fab-item" data-action="ai-screening" title="AI Health Screening">
+                <i class="fas fa-robot"></i>
+            </button>
+            <button class="fab-item" data-action="rewards" title="Rewards Center">
+                <i class="fas fa-gift"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header with Glassmorphism -->
+    <header class="header-modern glass-effect">
+        <div class="container-fluid">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <div class="logo-container">
+                        <div class="logo-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1 class="app-title gradient-text">BloodBridge</h1>
+                            <p class="app-tagline">AI-Powered Healthcare</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Pills -->
+                <ul class="nav-pills">
+                    <li class="nav-pill active" data-section="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </li>
+                    <li class="nav-pill" data-section="donors">
+                        <i class="fas fa-users"></i>
+                        <span>Donors</span>
+                    </li>
+                    <li class="nav-pill" data-section="patients">
+                        <i class="fas fa-user-injured"></i>
+                        <span>Patients</span>
+                    </li>
+                    <li class="nav-pill" data-section="ai-insights">
+                        <i class="fas fa-brain"></i>
+                        <span>AI Insights</span>
+                    </li>
+                    <li class="nav-pill" data-section="health-dashboard">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Health</span>
+                    </li>
+                    <li class="nav-pill" data-section="achievements">
+                        <i class="fas fa-trophy"></i>
+                        <span>Achievements</span>
+                    </li>
+                    <li class="nav-pill" data-section="leaderboards">
+                        <i class="fas fa-ranking-star"></i>
+                        <span>Leaderboards</span>
+                    </li>
+                    <li class="nav-pill" data-section="rewards">
+                        <i class="fas fa-gift"></i>
+                        <span>Rewards</span>
+                    </li>
+                    <li class="nav-pill" data-section="learning">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Learning</span>
+                    </li>
+                    <li class="nav-pill" data-section="news">
+                        <i class="fas fa-newspaper"></i>
+                        <span>News</span>
+                    </li>
+                    <li class="nav-pill" data-section="blood-banks">
+                        <i class="fas fa-hospital"></i>
+                        <span>Blood Banks</span>
+                    </li>
+                    <li class="nav-pill" data-section="live-map">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Live Map</span>
+                    </li>
+                </ul>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <!-- Emergency Button with Pulse -->
+                    <button class="btn-emergency pulse-animation" id="emergencyBtn">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>SOS Emergency</span>
+                    </button>
+
+                    <!-- Notification Bell -->
+                    <div class="notification-wrapper">
+                        <button class="icon-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge-count">3</span>
+                        </button>
+                        <div class="notification-dropdown hidden" id="notificationDropdown">
+                            <div class="notification-header">
+                                <h4>Notifications</h4>
+                                <button class="text-btn">Mark all read</button>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <!-- Dynamic notifications -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Profile -->
+                    <div class="user-profile-wrapper">
+                        <button class="user-profile-btn" id="userProfileBtn">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=1FB8CD&color=fff" alt="Profile" class="profile-avatar">
+                            <span class="user-name">Admin</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i> Settings
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-shield-alt"></i> Privacy
+                            </a>
+                            <hr>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button class="icon-btn theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <!-- Language Selector -->
+                    <select class="language-select glass-select" id="languageSelect">
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="hi">🇮🇳 हिं</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="mr">मराठी</option>
+                        <option value="gu">ગુજ</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="ml">മലയാളം</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                    </select>
+                    
+                    <!-- Accessibility Toggle -->
+                    <button class="icon-btn" id="accessibilityToggle" title="Accessibility Settings">
+                        <i class="fas fa-universal-access"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <!-- Hero Stats with 3D Cards -->
+            <div class="hero-stats">
+                <div class="stat-card-3d critical-stat">
+                    <div class="stat-icon-wrapper">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number counter" data-target="2100000">0</h3>
+                        <p class="stat-label">Blood Units Needed</p>
+                        <div class="stat-trend">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>14% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="stat-sparkline" id="sparkline1"></div>
+                </div>
+
+                <div class="stat-card-3d success-stat">
+                    <div class="stat-icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number counter" data-target="4437">0</h3>
+                        <p class="stat-label">Active Donors</p>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>23% growth</span>
+                        </div>
+                    </div>
+                    <div class="stat-sparkline" id="sparkline2"></div>
+                </div>
+
+                <div class="stat-card-3d warning-stat">
+                    <div class="stat-icon-wrapper">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number counter" data-target="100000">0</h3>
+                        <p class="stat-label">Patients in Care</p>
+                        <div class="stat-trend">
+                            <i class="fas fa-minus"></i>
+                            <span>Stable</span>
+                        </div>
+                    </div>
+                    <div class="stat-sparkline" id="sparkline3"></div>
+                </div>
+
+                <div class="stat-card-3d info-stat">
+                    <div class="stat-icon-wrapper">
+                        <i class="fas fa-hand-holding-medical"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number counter" data-target="3333">0</h3>
+                        <p class="stat-label">Lives Saved</p>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+156 this week</span>
+                        </div>
+                    </div>
+                    <div class="stat-sparkline" id="sparkline4"></div>
+                </div>
+            </div>
+
+            <!-- AI Command Center -->
+            <div class="grid-layout">
+                <div class="grid-item span-2">
+                    <div class="card-modern">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-robot"></i>
+                                <h3>AI Prediction Engine</h3>
+                            </div>
+                            <div class="card-actions">
+                                <button class="icon-btn-sm" title="Refresh">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button class="icon-btn-sm" title="Settings">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container-modern">
+                                <canvas id="demandForecastChart"></canvas>
+                            </div>
+                            <div class="prediction-insights">
+                                <div class="insight-item critical">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <div>
+                                        <strong>Critical Alert:</strong> AB- shortage predicted in 48hrs
+                                        <button class="btn-link">Take Action →</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <div class="card-modern">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-tint"></i>
+                                <h3>Blood Type Availability</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="blood-availability-grid">
+                                <div class="blood-type-modern" data-type="A+">
+                                    <div class="blood-icon">A+</div>
+                                    <div class="progress-ring" data-progress="75">
+                                        <svg width="60" height="60">
+                                            <circle class="progress-ring-circle" stroke="#10B981" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                        </svg>
+                                        <span class="progress-percent">75%</span>
+                                    </div>
+                                    <span class="blood-status">Good</span>
+                                </div>
+                                <div class="blood-type-modern" data-type="O+">
+                                    <div class="blood-icon">O+</div>
+                                    <div class="progress-ring" data-progress="60">
+                                        <svg width="60" height="60">
+                                            <circle class="progress-ring-circle" stroke="#F59E0B" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                        </svg>
+                                        <span class="progress-percent">60%</span>
+                                    </div>
+                                    <span class="blood-status">Low</span>
+                                </div>
+                                <div class="blood-type-modern" data-type="B+">
+                                    <div class="blood-icon">B+</div>
+                                    <div class="progress-ring" data-progress="45">
+                                        <svg width="60" height="60">
+                                            <circle class="progress-ring-circle" stroke="#F59E0B" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                        </svg>
+                                        <span class="progress-percent">45%</span>
+                                    </div>
+                                    <span class="blood-status">Low</span>
+                                </div>
+                                <div class="blood-type-modern critical" data-type="AB-">
+                                    <div class="blood-icon">AB-</div>
+                                    <div class="progress-ring" data-progress="20">
+                                        <svg width="60" height="60">
+                                            <circle class="progress-ring-circle" stroke="#EF4444" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                        </svg>
+                                        <span class="progress-percent">20%</span>
+                                    </div>
+                                    <span class="blood-status">Critical</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-Time Activity Feed -->
+            <div class="grid-layout mt-4">
+                <div class="grid-item span-2">
+                    <div class="card-modern">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-stream"></i>
+                                <h3>Live Activity Stream</h3>
+                                <span class="live-indicator">
+                                    <span class="pulse-dot"></span>
+                                    LIVE
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body no-padding">
+                            <div class="activity-stream" id="activityStream">
+                                <!-- Dynamic activity items -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <div class="card-modern">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h3>Urgent Requests</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="urgent-requests-list" id="urgentRequestsList">
+                                <!-- Dynamic urgent requests -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donor Leaderboard -->
+            <div class="card-modern mt-4">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Top Blood Heroes - Leaderboard</h3>
+                    </div>
+                    <select class="filter-select">
+                        <option>This Month</option>
+                        <option>This Year</option>
+                        <option>All Time</option>
+                    </select>
+                </div>
+                <div class="card-body">
+                    <div class="leaderboard" id="leaderboard">
+                        <!-- Dynamic leaderboard -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donors Section with Advanced Features -->
+        <section id="donors" class="section">
+            <div class="section-header">
+                <h2>Donor Management Hub</h2>
+                <div class="section-actions">
+                    <button class="btn-primary" data-modal="donor-registration">
+                        <i class="fas fa-user-plus"></i>
+                        Register New Donor
+                    </button>
+                    <button class="btn-secondary" id="exportDonors">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Search & Filters -->
+            <div class="search-filter-bar">
+                <div class="search-box-modern">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search donors by name, blood type, location..." id="donorSearch">
+                    <button class="voice-search-btn" title="Voice Search">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+                <div class="filter-chips">
+                    <button class="chip active" data-filter="all">All</button>
+                    <button class="chip" data-filter="available">Available Now</button>
+                    <button class="chip" data-filter="verified">Verified</button>
+                    <button class="chip" data-filter="regular">Regular Donors</button>
+                    <button class="chip" data-filter="emergency">Emergency</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="view-btn" data-view="map">
+                        <i class="fas fa-map"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Donor Cards Grid -->
+            <div class="donor-grid-modern" id="donorGrid">
+                <!-- Dynamic donor cards will be inserted here -->
+            </div>
+        </section>
+
+        <!-- Live Map Section -->
+        <section id="live-map" class="section">
+            <div class="card-modern full-height">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Real-Time Donor & Blood Bank Map</h3>
+                    </div>
+                    <div class="map-controls">
+                        <button class="btn-secondary" id="centerMap">
+                            <i class="fas fa-crosshairs"></i>
+                            Center on Me
+                        </button>
+                        <button class="btn-secondary" id="toggleHeatmap">
+                            <i class="fas fa-fire"></i>
+                            Heatmap View
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body no-padding">
+                    <div id="map" class="map-container"></div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <span class="legend-marker donor"></span>
+                            <span>Available Donors</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-marker blood-bank"></span>
+                            <span>Blood Banks</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-marker request"></span>
+                            <span>Active Requests</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Insights Section -->
+        <section id="ai-insights" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-brain"></i> AI-Powered Insights</h2>
+                <p>Advanced predictions and pattern analysis</p>
+            </div>
+            
+            <div id="aiInsightsContainer">
+                <!-- Dynamic AI insights content loaded here -->
+                <div class="insights-dashboard">
+                    <div class="card-modern">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-chart-bar"></i>
+                                <h3>Predictive Analytics Dashboard</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="analytics-grid">
+                                <div class="analytics-item">
+                                    <canvas id="donorTrendsChart"></canvas>
+                                </div>
+                                <div class="analytics-item">
+                                    <canvas id="bloodTypeDistribution"></canvas>
+                                </div>
+                                <div class="analytics-item">
+                                    <canvas id="regionalAnalysis"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patients Section -->
+        <section id="patients" class="section">
+            <div class="patient-dashboard">
+                <!-- Patient management content -->
+            </div>
+        </section>
+
+        <!-- Blood Banks Section -->
+        <section id="blood-banks" class="section">
+            <div class="blood-bank-network">
+                <!-- Blood bank network content -->
+            </div>
+        </section>
+
+        <!-- Health Dashboard Section - NEW -->
+        <section id="health-dashboard" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-heartbeat"></i> Health Dashboard</h2>
+                <p>Comprehensive health monitoring and management</p>
+            </div>
+            <div id="healthDashboardContent">
+                <!-- Dynamic health dashboard content -->
+            </div>
+        </section>
+
+        <!-- Achievements Section - NEW -->
+        <section id="achievements" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> Your Achievements</h2>
+                <p>Track your donation milestones and unlock badges</p>
+            </div>
+            <div id="achievementsContainer">
+                <!-- Dynamic achievements content -->
+            </div>
+        </section>
+
+        <!-- Leaderboards Section - NEW -->
+        <section id="leaderboards" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-ranking-star"></i> Leaderboards</h2>
+                <p>See where you rank among India's blood heroes</p>
+            </div>
+            <div id="leaderboardsContainer">
+                <!-- Dynamic leaderboards content -->
+            </div>
+        </section>
+
+        <!-- Rewards Section - NEW -->
+        <section id="rewards" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-gift"></i> Rewards Center</h2>
+                <p>Redeem your points for exclusive rewards and perks</p>
+            </div>
+            <div id="rewardsContainer">
+                <!-- Dynamic rewards content -->
+            </div>
+        </section>
+
+        <!-- Learning Portal Section - NEW -->
+        <section id="learning" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-graduation-cap"></i> Learning Portal</h2>
+                <p>Expand your knowledge about blood donation and thalassemia care</p>
+            </div>
+            <div id="learningContainer">
+                <!-- Dynamic learning content -->
+            </div>
+        </section>
+
+        <!-- News Feed Section - NEW -->
+        <section id="news" class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-newspaper"></i> Latest News & Updates</h2>
+                <p>Stay informed about blood donation campaigns and success stories</p>
+            </div>
+            <div id="newsContainer">
+                <!-- Dynamic news content -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modern Modal System -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    
+    <!-- Emergency Request Modal -->
+    <div class="modal-modern" id="emergencyModal">
+        <div class="modal-container">
+            <button class="modal-close" data-close="emergencyModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-ambulance modal-icon critical"></i>
+                <h2>Emergency Blood Request</h2>
+                <p>Submit urgent request - instant alert to nearby donors</p>
+            </div>
+            <div class="modal-body">
+                <form id="emergencyForm" class="modern-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Patient Name <span class="required">*</span></label>
+                            <input type="text" required placeholder="Enter patient name">
+                        </div>
+                        <div class="form-group">
+                            <label>Blood Type Required <span class="required">*</span></label>
+                            <select required>
+                                <option value="">Select blood type</option>
+                                <option>A+</option>
+                                <option>A-</option>
+                                <option>B+</option>
+                                <option>B-</option>
+                                <option>AB+</option>
+                                <option>AB-</option>
+                                <option>O+</option>
+                                <option>O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Units Required <span class="required">*</span></label>
+                            <input type="number" min="1" required placeholder="Number of units">
+                        </div>
+                        <div class="form-group">
+                            <label>Urgency Level <span class="required">*</span></label>
+                            <select required>
+                                <option value="critical">Critical (0-2 hours)</option>
+                                <option value="urgent">Urgent (2-6 hours)</option>
+                                <option value="scheduled">Scheduled (6-24 hours)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Hospital/Location <span class="required">*</span></label>
+                        <input type="text" required placeholder="Hospital name and address">
+                        <button type="button" class="btn-link">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Use current location
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number <span class="required">*</span></label>
+                        <input type="tel" required placeholder="+91 XXXXX XXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea rows="3" placeholder="Any specific requirements or medical conditions..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" data-close="emergencyModal">Cancel</button>
+                        <button type="submit" class="btn-primary btn-emergency">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Emergency Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donor Registration Modal -->
+    <div class="modal-modern" id="donor-registration">
+        <div class="modal-container large">
+            <button class="modal-close" data-close="donor-registration">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-hand-holding-heart modal-icon success"></i>
+                <h2>Become a Blood Hero</h2>
+                <p>Join our community of life-savers</p>
+            </div>
+            <div class="modal-body">
+                <form id="donorRegistrationForm" class="modern-form">
+                    <div class="form-steps">
+                        <div class="step active">
+                            <span class="step-number">1</span>
+                            <span class="step-title">Personal Info</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <span class="step-title">Medical Info</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <span class="step-title">Verification</span>
+                        </div>
+                    </div>
+
+                    <div class="form-step-content active" data-step="1">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name <span class="required">*</span></label>
+                                <input type="text" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Birth <span class="required">*</span></label>
+                                <input type="date" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email <span class="required">*</span></label>
+                                <input type="email" required placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number <span class="required">*</span></label>
+                                <input type="tel" required placeholder="+91 XXXXX XXXXX">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea rows="2" placeholder="Your full address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-step-content" data-step="2">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Blood Type <span class="required">*</span></label>
+                                <select required>
+                                    <option value="">Select blood type</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Weight (kg) <span class="required">*</span></label>
+                                <input type="number" required min="50" placeholder="Minimum 50kg">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Medical Conditions</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="diabetes">
+                                    <span>Diabetes</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="hypertension">
+                                    <span>Hypertension</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="none">
+                                    <span>None</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Donation Date</label>
+                            <input type="date">
+                        </div>
+                    </div>
+
+                    <div class="form-step-content" data-step="3">
+                        <div class="verification-section">
+                            <div class="upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Upload ID Proof (Aadhaar/Passport/Driving License)</p>
+                                <input type="file" accept="image/*,.pdf" id="idProof">
+                                <button type="button" class="btn-secondary">Choose File</button>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span>I agree to terms and conditions and privacy policy</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="prevStep" disabled>Previous</button>
+                        <button type="button" class="btn-primary" id="nextStep">Next</button>
+                        <button type="submit" class="btn-primary" id="submitDonor" style="display:none;">
+                            <i class="fas fa-check"></i>
+                            Complete Registration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Consultation Modal -->
+    <div class="modal-modern" id="video-call">
+        <div class="modal-container video-modal">
+            <button class="modal-close" data-close="video-call">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="video-call-container">
+                <div class="video-main">
+                    <video id="remoteVideo" autoplay playsinline></video>
+                    <div class="video-overlay">
+                        <div class="participant-info">
+                            <img src="https://ui-avatars.com/api/?name=Dr+Sharma" alt="Doctor">
+                            <span>Dr. Sharma</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-self">
+                    <video id="localVideo" autoplay playsinline muted></video>
+                </div>
+                <div class="video-controls">
+                    <button class="video-control-btn" id="toggleMic">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="video-control-btn" id="toggleVideo">
+                        <i class="fas fa-video"></i>
+                    </button>
+                    <button class="video-control-btn danger" id="endCall">
+                        <i class="fas fa-phone-slash"></i>
+                    </button>
+                    <button class="video-control-btn" id="shareScreen">
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <button class="video-control-btn" id="toggleChat">
+                        <i class="fas fa-comment"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Dashboard Modal - NEW -->
+    <div class="modal-modern" id="healthDashboardModal">
+        <div class="modal-container large">
+            <button class="modal-close" data-close="healthDashboardModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-heartbeat modal-icon success"></i>
+                <h2>Health Dashboard</h2>
+                <p>Your complete health monitoring system</p>
+            </div>
+            <div class="modal-body">
+                <div id="healthDashboardContent">
+                    <!-- Dynamic content loaded by app -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Screening Modal - NEW -->
+    <div class="modal-modern" id="aiScreeningModal">
+        <div class="modal-container">
+            <button class="modal-close" data-close="aiScreeningModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-robot modal-icon info"></i>
+                <h2>AI Health Screening</h2>
+                <p>Check your donation eligibility with AI</p>
+            </div>
+            <div class="modal-body">
+                <form id="aiScreeningForm" class="modern-form">
+                    <div class="form-group">
+                        <label>Age <span class="required">*</span></label>
+                        <input type="number" name="age" required min="18" max="65" placeholder="Enter your age">
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg) <span class="required">*</span></label>
+                        <input type="number" name="weight" required min="45" placeholder="Enter your weight">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Donation Date</label>
+                        <input type="date" name="lastDonation">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Medications (comma-separated)</label>
+                        <input type="text" name="medications" placeholder="e.g., Aspirin, Ibuprofen">
+                    </div>
+                    <div class="form-group">
+                        <label>Health Conditions (comma-separated)</label>
+                        <input type="text" name="conditions" placeholder="e.g., Diabetes, Hypertension">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i> Check Eligibility
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rewards Center Modal - NEW -->
+    <div class="modal-modern" id="rewardsCenterModal">
+        <div class="modal-container large">
+            <button class="modal-close" data-close="rewardsCenterModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-gift modal-icon success"></i>
+                <h2>Rewards Center</h2>
+                <p>Redeem your points for exclusive rewards</p>
+            </div>
+            <div class="modal-body">
+                <div id="rewardsContainer">
+                    <!-- Dynamic content loaded by app -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Viewer Modal - NEW -->
+    <div class="modal-modern" id="courseViewerModal">
+        <div class="modal-container extra-large">
+            <button class="modal-close" data-close="courseViewerModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-graduation-cap modal-icon info"></i>
+                <h2>Course Viewer</h2>
+                <p>Interactive learning experience</p>
+            </div>
+            <div class="modal-body">
+                <div id="courseViewerContent">
+                    <!-- Dynamic course content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Settings Modal - NEW -->
+    <div class="modal-modern" id="accessibilityModal">
+        <div class="modal-container">
+            <button class="modal-close" data-close="accessibilityModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-universal-access modal-icon info"></i>
+                <h2>Accessibility Settings</h2>
+                <p>Customize your experience</p>
+            </div>
+            <div class="modal-body">
+                <div class="accessibility-settings">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4><i class="fas fa-volume-up"></i> Screen Reader</h4>
+                            <p>Enable screen reader support</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="screenReaderToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4><i class="fas fa-microphone"></i> Voice Commands</h4>
+                            <p>Control app with voice</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="voiceCommandsToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4><i class="fas fa-comment"></i> Text-to-Speech</h4>
+                            <p>Read content aloud</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="ttsToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4><i class="fas fa-adjust"></i> High Contrast Mode</h4>
+                            <p>Improve visibility</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="highContrastToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4><i class="fas fa-text-height"></i> Font Size</h4>
+                            <p>Adjust text size</p>
+                        </div>
+                        <select class="glass-select" id="fontSizeSelect">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                            <option value="xlarge">Extra Large</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot (Enhanced) -->
+    <div class="chatbot-modern" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-avatar">
+                <img src="https://ui-avatars.com/api/?name=AI+Veeru&background=1FB8CD&color=fff" alt="AI">
+                <span class="status-indicator online"></span>
+            </div>
+            <div class="chatbot-info">
+                <h4>AI Veeru</h4>
+                <p class="typing-indicator">Online</p>
+            </div>
+            <div class="chatbot-actions">
+                <button class="icon-btn-sm" id="minimizeChatbot">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="icon-btn-sm" id="closeChatbot">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message-day-divider">
+                <span>Today</span>
+            </div>
+            <div class="chat-message bot">
+                <div class="message-avatar">
+                    <img src="https://ui-avatars.com/api/?name=AI&background=1FB8CD&color=fff" alt="AI">
+                </div>
+                <div class="message-content">
+                    <p>Hello! I'm Veeru, your AI health assistant. How can I help you today?</p>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+            <div class="quick-replies">
+                <button class="quick-reply-btn">Find Donors</button>
+                <button class="quick-reply-btn">Blood Banks Near Me</button>
+                <button class="quick-reply-btn">Register to Donate</button>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <button class="icon-btn-sm" title="Attach file">
+                <i class="fas fa-paperclip"></i>
+            </button>
+            <input type="text" placeholder="Type your message..." id="chatInput">
+            <button class="icon-btn-sm" title="Voice input">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="send-btn" id="sendMessage">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comments"></i>
+        <span class="chatbot-badge">1</span>
+    </button>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="src/js/app-modern.js"></script>
+    <script type="module" src="src/js/components.js"></script>
+    <script type="module" src="src/js/services.js"></script>
+    <script type="module" src="src/js/utils.js"></script>
+    
+    <!-- Service Worker for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+                console.log('Service Worker registered', reg);
+            }).catch(err => {
+                console.log('Service Worker registration failed', err);
+            });
+        }
+    </script>
+</body>
+</html>

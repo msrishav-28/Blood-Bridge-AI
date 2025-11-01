@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - BloodBridge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0F1419 0%, #1a1f2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .offline-icon {
+            font-size: 120px;
+            margin-bottom: 30px;
+            opacity: 0.5;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #1FB8CD;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #1FB8CD 0%, #0E9AAA 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(31, 184, 205, 0.3);
+        }
+        
+        .offline-tips {
+            margin-top: 50px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .offline-tips h3 {
+            color: #1FB8CD;
+            margin-bottom: 15px;
+        }
+        
+        .offline-tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .offline-tips li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .offline-tips li:before {
+            content: "•";
+            color: #1FB8CD;
+            font-size: 24px;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        
+        <h1>You're Offline</h1>
+        
+        <p>
+            Oops! It looks like you've lost your internet connection. 
+            Don't worry, BloodBridge works offline too!
+        </p>
+        
+        <button class="btn" onclick="location.reload()">
+            Try Again
+        </button>
+        
+        <div class="offline-tips">
+            <h3>What you can do offline:</h3>
+            <ul>
+                <li>View cached donor information</li>
+                <li>Access saved blood bank locations</li>
+                <li>Read educational content about blood donation</li>
+                <li>Prepare emergency requests (will send when online)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Check connectivity status
+        function checkOnlineStatus() {
+            if (navigator.onLine) {
+                location.reload();
+            }
+        }
+        
+        // Listen for online event
+        window.addEventListener('online', checkOnlineStatus);
+        
+        // Check periodically
+        setInterval(checkOnlineStatus, 5000);
+    </script>
+</body>
+</html>
